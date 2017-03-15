@@ -1,178 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://schemas.egov.bg/messaging/v1" xmlns:tns="uri:egovmsg" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schemas.egov.bg/messaging/v1" elementFormDefault="qualified">
-	<xs:simpleType name="guid">
-		<xs:annotation>
-			<xs:documentation>Тип за уникален индентификатор</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}" />
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:element name="EGovMessageDir">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="Entity" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>Списък от организации, вписани в директорията</xs:documentation>
-					</xs:annotation>
-					<xs:complexType mixed="true">
-						<xs:sequence>
-							<xs:element name="EntityIdentifier">
-								<xs:annotation>
-									<xs:documentation>ЕИК/БУЛСТАТ</xs:documentation>
-								</xs:annotation>
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:pattern value="[0-9]{9}|[0-9]{13}|[0-9]{10}" />
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-							<xs:element name="Guid" type="guid">
-								<xs:annotation>
-									<xs:documentation>уникален идентификатор на организация</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="ParentGuid" type="guid">
-								<xs:annotation>
-									<xs:documentation>идентификатор на организация от горно ниво</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="AdministrativeBodyName">
-								<xs:annotation>
-									<xs:documentation>Наименование на административен орган</xs:documentation>
-								</xs:annotation>
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:maxLength value="120" />
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-							<xs:element name="Contact">
-								<xs:annotation>
-									<xs:documentation>Контактно лице по технически въпроси</xs:documentation>
-								</xs:annotation>
-								<xs:complexType>
-									<xs:all>
-										<xs:element name="Phone">
-											<xs:annotation>
-												<xs:documentation>Стационарен телефон</xs:documentation>
-											</xs:annotation>
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:pattern value="\+?[0-9 /]{1,18}" />
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="Fax">
-											<xs:annotation>
-												<xs:documentation>Факс</xs:documentation>
-											</xs:annotation>
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:pattern value="\+?[0-9 /]{1,18}" />
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="EmailAddress">
-											<xs:annotation>
-												<xs:documentation>Адрес на електронна поща</xs:documentation>
-											</xs:annotation>
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:pattern value="[\w\-!#$%&amp;'*+/=?^`{|}~.&quot;]+@([\w]+[.-]?)+[\w]\.[\w]+" />
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-									</xs:all>
-								</xs:complexType>
-							</xs:element>
-							<xs:element name="CertificateSN">
-								<xs:annotation>
-									<xs:documentation>Сериен номер на транспортния сертификат на организацията в hex</xs:documentation>
-								</xs:annotation>
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:pattern value="[a-f0-9]{6,20}" />
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-							<xs:element name="Services">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="Service" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation>Списък от услуги, предоставяни от организацията</xs:documentation>
-											</xs:annotation>
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="Guid" type="guid">
-														<xs:annotation>
-															<xs:documentation>Уникален идентификатор на вид на услугата</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-													<xs:element name="Name" type="xs:string">
-														<xs:annotation>
-															<xs:documentation>Име на услугата</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-													<xs:element name="URI" type="xs:anyURI">
-														<xs:annotation>
-															<xs:documentation>идентификатор за достъп до услугата</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-													<xs:element name="Status">
-														<xs:annotation>
-															<xs:documentation>активна, неактивна услуга</xs:documentation>
-														</xs:annotation>
-														<xs:simpleType>
-															<xs:restriction base="xs:string">
-																<xs:enumeration value="Active" />
-																<xs:enumeration value="TemporarilyInactive" />
-																<xs:enumeration value="PermanentlyInactive" />
-															</xs:restriction>
-														</xs:simpleType>
-													</xs:element>
-													<xs:element name="Type" type="xs:string">
-														<xs:annotation>
-															<xs:documentation>тип на услугата (service, email, esoed)</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-													<xs:element name="Version" type="xs:integer">
-														<xs:annotation>
-															<xs:documentation>Версия на услугата</xs:documentation>
-														</xs:annotation>
-													</xs:element>
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>
-							<xs:element name="LastChange" type="xs:dateTime">
-								<xs:annotation>
-									<xs:documentation>Дата на последна промяна за тази организация</xs:documentation>
-								</xs:annotation>
-							</xs:element>
-							<xs:element name="Status">
-								<xs:annotation>
-									<xs:documentation>активен, неактивен запис</xs:documentation>
-								</xs:annotation>
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="Active" />
-										<xs:enumeration value="Inactive" />
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-				<xs:element name="LastChange" type="xs:dateTime">
-					<xs:annotation>
-						<xs:documentation>Дата на последна актуализация на данните</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-</xs:schema>
+<xsd:schema elementFormDefault="qualified"
+	targetNamespace="http://schemas.egov.bg/messaging/v1"
+	xmlns="http://schemas.egov.bg/messaging/v1"
+	xmlns:tns="uri:egovmsg"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:simpleType name="guid">
+		<xsd:annotation>
+			<xsd:documentation>Тип за уникален индентификатор</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="EGovMessageDir">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Entity" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Списък от организации, вписани в директорията</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType mixed="true">
+						<xsd:sequence>
+							<xsd:element name="EntityIdentifier">
+								<xsd:annotation>
+									<xsd:documentation>ЕИК/БУЛСТАТ</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:pattern value="[0-9]{9}|[0-9]{13}|[0-9]{10}" />
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Guid" type="guid">
+								<xsd:annotation>
+									<xsd:documentation>уникален идентификатор на организация</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="ParentGuid" type="guid">
+								<xsd:annotation>
+									<xsd:documentation>идентификатор на организация от горно ниво</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="AdministrativeBodyName">
+								<xsd:annotation>
+									<xsd:documentation>Наименование на административен орган</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:maxLength value="120" />
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Contact">
+								<xsd:annotation>
+									<xsd:documentation>Контактно лице по технически въпроси</xsd:documentation>
+								</xsd:annotation>
+								<xsd:complexType>
+									<xsd:all>
+										<xsd:element name="Phone">
+											<xsd:annotation>
+												<xsd:documentation>Стационарен телефон</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="\+?[0-9 /]{1,18}" />
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element name="Fax">
+											<xsd:annotation>
+												<xsd:documentation>Факс</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="\+?[0-9 /]{1,18}" />
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element name="EmailAddress">
+											<xsd:annotation>
+												<xsd:documentation>Адрес на електронна поща</xsd:documentation>
+											</xsd:annotation>
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:pattern value="[\w\-!#$%&amp;'*+/=?^`{|}~.&quot;]+@([\w]+[.-]?)+[\w]\.[\w]+" />
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:all>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="CertificateSN">
+								<xsd:annotation>
+									<xsd:documentation>Сериен номер на транспортния сертификат на организацията в hex</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:pattern value="[a-f0-9]{6,20}" />
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+							<xsd:element name="Services">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="Service" maxOccurs="unbounded">
+											<xsd:annotation>
+												<xsd:documentation>Списък от услуги, предоставяни от организацията</xsd:documentation>
+											</xsd:annotation>
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="Guid" type="guid">
+														<xsd:annotation>
+															<xsd:documentation>Уникален идентификатор на вид на услугата</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="Name" type="xsd:string">
+														<xsd:annotation>
+															<xsd:documentation>Име на услугата</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="URI" type="xsd:anyURI">
+														<xsd:annotation>
+															<xsd:documentation>идентификатор за достъп до услугата</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="Status">
+														<xsd:annotation>
+															<xsd:documentation>активна, неактивна услуга</xsd:documentation>
+														</xsd:annotation>
+														<xsd:simpleType>
+															<xsd:restriction base="xsd:string">
+																<xsd:enumeration value="Active" />
+																<xsd:enumeration value="TemporarilyInactive" />
+																<xsd:enumeration value="PermanentlyInactive" />
+															</xsd:restriction>
+														</xsd:simpleType>
+													</xsd:element>
+													<xsd:element name="Type" type="xsd:string">
+														<xsd:annotation>
+															<xsd:documentation>тип на услугата (service, email, esoed)</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+													<xsd:element name="Version" type="xsd:integer">
+														<xsd:annotation>
+															<xsd:documentation>Версия на услугата</xsd:documentation>
+														</xsd:annotation>
+													</xsd:element>
+												</xsd:sequence>
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+							<xsd:element name="LastChange" type="xsd:dateTime">
+								<xsd:annotation>
+									<xsd:documentation>Дата на последна промяна за тази организация</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="Status">
+								<xsd:annotation>
+									<xsd:documentation>активен, неактивен запис</xsd:documentation>
+								</xsd:annotation>
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="Active" />
+										<xsd:enumeration value="Inactive" />
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="LastChange" type="xsd:dateTime">
+					<xsd:annotation>
+						<xsd:documentation>Дата на последна актуализация на данните</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

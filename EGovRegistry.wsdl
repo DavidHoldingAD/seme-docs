@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="uri:egovmsg" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="uri:egovmsg">
-	<types>
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions
+	targetNamespace="uri:egovmsg"
+	xmlns:tns="uri:egovmsg"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
 		<xsd:schema targetNamespace="uri:egovmsg">
-			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
-			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
 			<xsd:complexType name="Contact">
 				<xsd:all>
 					<xsd:element name="Phone" type="xsd:string" />
@@ -23,8 +27,8 @@
 			</xsd:complexType>
 			<xsd:complexType name="Services">
 				<xsd:complexContent>
-					<xsd:restriction base="SOAP-ENC:Array">
-						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Service[]" />
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:Service[]" />
 					</xsd:restriction>
 				</xsd:complexContent>
 			</xsd:complexType>
@@ -43,8 +47,8 @@
 			</xsd:complexType>
 			<xsd:complexType name="Entities">
 				<xsd:complexContent>
-					<xsd:restriction base="SOAP-ENC:Array">
-						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Entity[]" />
+					<xsd:restriction base="soapenc:Array">
+						<xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:Entity[]" />
 					</xsd:restriction>
 				</xsd:complexContent>
 			</xsd:complexType>
@@ -55,116 +59,117 @@
 				</xsd:all>
 			</xsd:complexType>
 			<xsd:simpleType name="guid">
-				<xsd:restriction base="xsd:string"></xsd:restriction>
+				<xsd:restriction base="xsd:string" />
 			</xsd:simpleType>
 		</xsd:schema>
-	</types>
-	<message name="GetAllRecordsRequest"></message>
-	<message name="GetAllRecordsResponse">
-		<part name="return" type="tns:EGovMessageDir" />
-	</message>
-	<message name="GetNewRecordsRequest">
-		<part name="date" type="xsd:dateTime" />
-	</message>
-	<message name="GetNewRecordsResponse">
-		<part name="return" type="tns:EGovMessageDir" />
-	</message>
-	<message name="GetByEntityIdentifierRequest">
-		<part name="EntityIdentifier" type="xsd:string" />
-	</message>
-	<message name="GetByEntityIdentifierResponse">
-		<part name="return" type="tns:EGovMessageDir" />
-	</message>
-	<message name="GetByGuidRequest">
-		<part name="guid" type="xsd:string" />
-	</message>
-	<message name="GetByGuidResponse">
-		<part name="return" type="tns:EGovMessageDir" />
-	</message>
-	<message name="GetByCertificateSNRequest">
-		<part name="CertificateSN" type="xsd:string" />
-	</message>
-	<message name="GetByCertificateSNResponse">
-		<part name="return" type="tns:EGovMessageDir" />
-	</message>
-	<portType name="egovmsgPortType">
-		<operation name="GetAllRecords">
-			<documentation>Get all records</documentation>
-			<input message="tns:GetAllRecordsRequest" />
-			<output message="tns:GetAllRecordsResponse" />
-		</operation>
-		<operation name="GetNewRecords">
-			<documentation>Get all records modified since the given date</documentation>
-			<input message="tns:GetNewRecordsRequest" />
-			<output message="tns:GetNewRecordsResponse" />
-		</operation>
-		<operation name="GetByEntityIdentifier">
-			<documentation>Get record by EIK (bulstat)</documentation>
-			<input message="tns:GetByEntityIdentifierRequest" />
-			<output message="tns:GetByEntityIdentifierResponse" />
-		</operation>
-		<operation name="GetByGuid">
-			<documentation>Get record by guid</documentation>
-			<input message="tns:GetByGuidRequest" />
-			<output message="tns:GetByGuidResponse" />
-		</operation>
-		<operation name="GetByCertificateSN">
-			<documentation>Get record by Certificate Serial Number (hex)</documentation>
-			<input message="tns:GetByCertificateSNRequest" />
-			<output message="tns:GetByCertificateSNResponse" />
-		</operation>
-	</portType>
-	<binding name="egovmsgBinding" type="tns:egovmsgPortType">
+	</wsdl:types>
+	<wsdl:message name="GetAllRecordsRequest">
+	</wsdl:message>
+	<wsdl:message name="GetAllRecordsResponse">
+		<wsdl:part name="return" type="tns:EGovMessageDir" />
+	</wsdl:message>
+	<wsdl:message name="GetNewRecordsRequest">
+		<wsdl:part name="date" type="xsd:dateTime" />
+	</wsdl:message>
+	<wsdl:message name="GetNewRecordsResponse">
+		<wsdl:part name="return" type="tns:EGovMessageDir" />
+	</wsdl:message>
+	<wsdl:message name="GetByEntityIdentifierRequest">
+		<wsdl:part name="EntityIdentifier" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:message name="GetByEntityIdentifierResponse">
+		<wsdl:part name="return" type="tns:EGovMessageDir" />
+	</wsdl:message>
+	<wsdl:message name="GetByGuidRequest">
+		<wsdl:part name="guid" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:message name="GetByGuidResponse">
+		<wsdl:part name="return" type="tns:EGovMessageDir" />
+	</wsdl:message>
+	<wsdl:message name="GetByCertificateSNRequest">
+		<wsdl:part name="CertificateSN" type="xsd:string" />
+	</wsdl:message>
+	<wsdl:message name="GetByCertificateSNResponse">
+		<wsdl:part name="return" type="tns:EGovMessageDir" />
+	</wsdl:message>
+	<wsdl:portType name="egovmsgPortType">
+		<wsdl:operation name="GetAllRecords">
+			<wsdl:documentation>Get all records</wsdl:documentation>
+			<wsdl:input message="tns:GetAllRecordsRequest" />
+			<wsdl:output message="tns:GetAllRecordsResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="GetNewRecords">
+			<wsdl:documentation>Get all records modified since the given date</wsdl:documentation>
+			<wsdl:input message="tns:GetNewRecordsRequest" />
+			<wsdl:output message="tns:GetNewRecordsResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="GetByEntityIdentifier">
+			<wsdl:documentation>Get record by EIK (BULSTAT)</wsdl:documentation>
+			<wsdl:input message="tns:GetByEntityIdentifierRequest" />
+			<wsdl:output message="tns:GetByEntityIdentifierResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="GetByGuid">
+			<wsdl:documentation>Get record by GUID</wsdl:documentation>
+			<wsdl:input message="tns:GetByGuidRequest" />
+			<wsdl:output message="tns:GetByGuidResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="GetByCertificateSN">
+			<wsdl:documentation>Get record by Certificate Serial Number (HEX)</wsdl:documentation>
+			<wsdl:input message="tns:GetByCertificateSNRequest" />
+			<wsdl:output message="tns:GetByCertificateSNResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="egovmsgBinding" type="tns:egovmsgPortType">
 		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
-		<operation name="GetAllRecords">
+		<wsdl:operation name="GetAllRecords">
 			<soap:operation soapAction="uri:egovmsg/GetAllRecords" style="rpc" />
-			<input>
+			<wsdl:input>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</input>
-			<output>
+			</wsdl:input>
+			<wsdl:output>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</output>
-		</operation>
-		<operation name="GetNewRecords">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetNewRecords">
 			<soap:operation soapAction="uri:egovmsg/GetNewRecords" style="rpc" />
-			<input>
+			<wsdl:input>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</input>
-			<output>
+			</wsdl:input>
+			<wsdl:output>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</output>
-		</operation>
-		<operation name="GetByEntityIdentifier">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetByEntityIdentifier">
 			<soap:operation soapAction="uri:egovmsg/GetByEntityIdentifier" style="rpc" />
-			<input>
+			<wsdl:input>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</input>
-			<output>
+			</wsdl:input>
+			<wsdl:output>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</output>
-		</operation>
-		<operation name="GetByGuid">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetByGuid">
 			<soap:operation soapAction="uri:egovmsg/GetByGuid" style="rpc" />
-			<input>
+			<wsdl:input>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</input>
-			<output>
+			</wsdl:input>
+			<wsdl:output>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</output>
-		</operation>
-		<operation name="GetByCertificateSN">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetByCertificateSN">
 			<soap:operation soapAction="uri:egovmsg/GetByCertificateSN" style="rpc" />
-			<input>
+			<wsdl:input>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</input>
-			<output>
+			</wsdl:input>
+			<wsdl:output>
 				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
-			</output>
-		</operation>
-	</binding>
-	<service name="egovmsg">
-		<port name="egovmsgPort" binding="tns:egovmsgBinding">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="egovmsg">
+		<wsdl:port name="egovmsgPort" binding="tns:egovmsgBinding">
 			<soap:address location="https://egov-docflow.is-bg.net:443/service/" />
-		</port>
-	</service>
-</definitions>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
