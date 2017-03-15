@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="uri:egovmsg" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="uri:egovmsg">
+	<types>
+		<xsd:schema targetNamespace="uri:egovmsg">
+			<xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+			<xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+			<xsd:complexType name="Contact">
+				<xsd:all>
+					<xsd:element name="Phone" type="xsd:string" />
+					<xsd:element name="Fax" type="xsd:string" />
+					<xsd:element name="EmailAddress" type="xsd:string" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Service">
+				<xsd:all>
+					<xsd:element name="Guid" type="xsd:string" />
+					<xsd:element name="Name" type="xsd:string" />
+					<xsd:element name="URI" type="xsd:anyURI" />
+					<xsd:element name="Status" type="xsd:string" />
+					<xsd:element name="Type" type="xsd:string" />
+					<xsd:element name="Version" type="xsd:integer" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Services">
+				<xsd:complexContent>
+					<xsd:restriction base="SOAP-ENC:Array">
+						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Service[]" />
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="Entity">
+				<xsd:all>
+					<xsd:element name="EntityIdentifier" type="xsd:string" />
+					<xsd:element name="Guid" type="xsd:string" />
+					<xsd:element name="ParentGuid" type="xsd:string" />
+					<xsd:element name="AdministrativeBodyName" type="xsd:string" />
+					<xsd:element name="Contact" type="tns:Contact" />
+					<xsd:element name="CertificateSN" type="xsd:string" />
+					<xsd:element name="Services" type="tns:Services" />
+					<xsd:element name="LastChange" type="xsd:dateTime" />
+					<xsd:element name="Status" type="xsd:string" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:complexType name="Entities">
+				<xsd:complexContent>
+					<xsd:restriction base="SOAP-ENC:Array">
+						<xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="tns:Entity[]" />
+					</xsd:restriction>
+				</xsd:complexContent>
+			</xsd:complexType>
+			<xsd:complexType name="EGovMessageDir">
+				<xsd:all>
+					<xsd:element name="Entities" type="tns:Entities" />
+					<xsd:element name="LastChange" type="xsd:dateTime" />
+				</xsd:all>
+			</xsd:complexType>
+			<xsd:simpleType name="guid">
+				<xsd:restriction base="xsd:string"></xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+	</types>
+	<message name="GetAllRecordsRequest"></message>
+	<message name="GetAllRecordsResponse">
+		<part name="return" type="tns:EGovMessageDir" />
+	</message>
+	<message name="GetNewRecordsRequest">
+		<part name="date" type="xsd:dateTime" />
+	</message>
+	<message name="GetNewRecordsResponse">
+		<part name="return" type="tns:EGovMessageDir" />
+	</message>
+	<message name="GetByEntityIdentifierRequest">
+		<part name="EntityIdentifier" type="xsd:string" />
+	</message>
+	<message name="GetByEntityIdentifierResponse">
+		<part name="return" type="tns:EGovMessageDir" />
+	</message>
+	<message name="GetByGuidRequest">
+		<part name="guid" type="xsd:string" />
+	</message>
+	<message name="GetByGuidResponse">
+		<part name="return" type="tns:EGovMessageDir" />
+	</message>
+	<message name="GetByCertificateSNRequest">
+		<part name="CertificateSN" type="xsd:string" />
+	</message>
+	<message name="GetByCertificateSNResponse">
+		<part name="return" type="tns:EGovMessageDir" />
+	</message>
+	<portType name="egovmsgPortType">
+		<operation name="GetAllRecords">
+			<documentation>Get all records</documentation>
+			<input message="tns:GetAllRecordsRequest" />
+			<output message="tns:GetAllRecordsResponse" />
+		</operation>
+		<operation name="GetNewRecords">
+			<documentation>Get all records modified since the given date</documentation>
+			<input message="tns:GetNewRecordsRequest" />
+			<output message="tns:GetNewRecordsResponse" />
+		</operation>
+		<operation name="GetByEntityIdentifier">
+			<documentation>Get record by EIK (bulstat)</documentation>
+			<input message="tns:GetByEntityIdentifierRequest" />
+			<output message="tns:GetByEntityIdentifierResponse" />
+		</operation>
+		<operation name="GetByGuid">
+			<documentation>Get record by guid</documentation>
+			<input message="tns:GetByGuidRequest" />
+			<output message="tns:GetByGuidResponse" />
+		</operation>
+		<operation name="GetByCertificateSN">
+			<documentation>Get record by Certificate Serial Number (hex)</documentation>
+			<input message="tns:GetByCertificateSNRequest" />
+			<output message="tns:GetByCertificateSNResponse" />
+		</operation>
+	</portType>
+	<binding name="egovmsgBinding" type="tns:egovmsgPortType">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="GetAllRecords">
+			<soap:operation soapAction="uri:egovmsg/GetAllRecords" style="rpc" />
+			<input>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="GetNewRecords">
+			<soap:operation soapAction="uri:egovmsg/GetNewRecords" style="rpc" />
+			<input>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="GetByEntityIdentifier">
+			<soap:operation soapAction="uri:egovmsg/GetByEntityIdentifier" style="rpc" />
+			<input>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="GetByGuid">
+			<soap:operation soapAction="uri:egovmsg/GetByGuid" style="rpc" />
+			<input>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+		<operation name="GetByCertificateSN">
+			<soap:operation soapAction="uri:egovmsg/GetByCertificateSN" style="rpc" />
+			<input>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output>
+				<soap:body use="encoded" namespace="uri:egovmsg" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+		</operation>
+	</binding>
+	<service name="egovmsg">
+		<port name="egovmsgPort" binding="tns:egovmsgBinding">
+			<soap:address location="https://egov-docflow.is-bg.net:443/service/" />
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:duri="http://ereg.egov.bg/segment/0009-000001" xmlns:msg="http://schemas.egov.bg/messaging/v1" targetNamespace="http://schemas.egov.bg/messaging/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="DocumentRegistrationRequestType">
+		<xs:sequence>
+			<xs:element name="Document" type="msg:DocumentType" />
+			<xs:element name="Comment" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Коментар, свързан с изпращането</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Message">
+		<xs:annotation>
+			<xs:documentation>Унифицирано съобщение  за обмен на неструктурирани документи и свързани с тях операции</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header">
+					<xs:annotation>
+						<xs:documentation>Заглавна част</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Version" type="xs:string" />
+							<xs:element name="MessageType" type="msg:MessageType" />
+							<xs:element name="MessageDate" type="xs:dateTime" />
+							<xs:element name="Sender" type="msg:EntityNodeType">
+								<xs:annotation>
+									<xs:documentation>Данните съвпадат с тези от директорията</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Recipient" type="msg:EntityNodeType">
+								<xs:annotation>
+									<xs:documentation>Данните съвпадат с тези от директорията</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="MessageGUID" type="msg:GUIDType" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Body">
+					<xs:annotation>
+						<xs:documentation> Тяло на съобщението </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="DocumentRegistrationRequest" type="msg:DocumentRegistrationRequestType" />
+							<xs:element name="DocumentStatusResponse" type="msg:DocumentStatusResponseType" />
+							<xs:element name="DocumentStatusRequest" type="msg:DocumentStatusRequestType" />
+							<xs:element name="Error" type="msg:ErrorMessageType" />
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ds:Signature" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="EntityNodeType">
+		<xs:sequence>
+			<xs:element name="Identifier" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>ЕИК на участник от директорията Информационно обслужване</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdministrativeBodyName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Име на участник от директорията (Информационно обслужване)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GUID" type="msg:GUIDType">
+				<xs:annotation>
+					<xs:documentation>GUID на участник от директорията (Информационно обслужване)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<!-- Описание на възел/организация, обменяща информация-->
+		<!-- Уникален идентификатор ID или GUID -->
+		<!-- Име на организация -->
+	</xs:complexType>
+	<xs:simpleType name="MessageType">
+		<xs:annotation>
+			<xs:documentation> Тип на съобщението </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MSG_DocumentRegistrationRequest" />
+			<xs:enumeration value="MSG_DocumentStatusResponse" />
+			<xs:enumeration value="MSG_DocumentStatusRequest" />
+			<xs:enumeration value="MSG_Error" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentStatusType">
+		<xs:annotation>
+			<xs:documentation> Тип за текущото състояние на документа при обработката на документа </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DS_WAIT_REGISTRATION" />
+			<xs:enumeration value="DS_REGISTERED" />
+			<xs:enumeration value="DS_STOPPED" />
+			<xs:enumeration value="DS_CLOSED" />
+			<xs:enumeration value="DS_NOT_FOUND" />
+			<xs:enumeration value="DS_ALREADY_RECEIVED" />
+			<xs:enumeration value="DS_REJECTED" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ServiceItemType">
+		<xs:annotation>
+			<xs:documentation>Тип за описание на услуга</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceName" type="xs:string" />
+			<xs:element name="ServiceType" type="xs:string" />
+			<xs:element name="ServiceCode" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CorrespondentType">
+		<xs:annotation>
+			<xs:documentation>Тип за кореспондент</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CorName" type="xs:string" />
+			<xs:element name="CorCity" type="xs:string" />
+			<xs:element name="CorAddress" type="xs:string" minOccurs="0" />
+			<xs:element name="CorEGN" type="xs:string" minOccurs="0" />
+			<xs:element name="CorIDCard" type="xs:string" minOccurs="0" />
+			<xs:element name="CorBULSTAT" type="xs:string" minOccurs="0" />
+			<xs:element name="CorEMail" type="xs:string" minOccurs="0" />
+			<xs:element name="CorPhone" type="xs:string" minOccurs="0" />
+			<xs:element name="CorMobilePhone" type="xs:string" minOccurs="0" />
+			<xs:element name="CorMOL" type="xs:string" minOccurs="0" />
+			<xs:element name="CorComment" type="xs:string" minOccurs="0" />
+			<xs:element name="CorKind" type="msg:CorrespondentKindType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalDataType">
+		<xs:annotation>
+			<xs:documentation>Допълнителни данни</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="xs:anyType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AttachmentFileType">
+		<xs:sequence>
+			<xs:element name="AttFileName" type="xs:string" />
+			<xs:element name="AttBody" type="xs:base64Binary" />
+			<xs:element name="AttComment" type="xs:string" minOccurs="0" />
+			<xs:element name="AttMIMEType" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentType">
+		<xs:annotation>
+			<xs:documentation>Тип за пренос на документ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocID" type="msg:DocumentIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Съдържа Номер или DocumentURI, с които е регистриран документа при изпращача</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocParentID" type="msg:DocumentIdentificationType" minOccurs="0" />
+			<xs:element name="DocKind" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Вид документ - молба, жалба</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocCorrespondentList" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Списък кореспонденти - незадължителен</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Corespondent" type="msg:CorrespondentType" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DocAttachmentList" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Списък с прикачени файлове</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Attachment" type="msg:AttachmentFileType" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DocAbout" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Относно (Subject)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocService" type="msg:ServiceItemType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Услуга - за бъдещо използване</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocComment" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Допълнителен коментар към документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocAddData" type="msg:AdditionalDataType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Допълнителни данни от типа Ключ=Стоойност</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocReqDateClose" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок за обработка на документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocAttentionTo" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Служител, на вниманието на който трябва да се насочи документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ds:Signature" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentStatusResponseType">
+		<xs:annotation>
+			<xs:documentation>Тип за потвърждение за завеждане</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocID" type="msg:DocumentIdentificationType">
+				<xs:annotation>
+					<xs:documentation>Съдържа Номер или DocumentURI, с които е регистриран документа при получателя</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocRegStatus" type="msg:DocumentStatusType">
+				<xs:annotation>
+					<xs:documentation>Статус на документа - очаква регистрация, в обработка, спрян, приключен, няма такъм документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RejectionReason" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Опционален елемент, който съдържа причина за отказ от регистрация в свободен текст при статус DS_Rejected</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocExpectCloseDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Очаквана дата за приключване на обработка</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocAddData" type="msg:AdditionalDataType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Допълнителни данни от типа Ключ=Стоойност</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentStatusRequestType">
+		<xs:annotation>
+			<xs:documentation> Тип за запитване на текущото състояние на документа </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocID" type="msg:DocumentIdentificationType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentIdentificationType">
+		<xs:annotation>
+			<xs:documentation>Тип за идентификация на документ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="DocumentNumber" type="msg:DocumentNumberType" />
+				<xs:element name="DocumentURI" type="duri:DocumentURI" />
+			</xs:choice>
+			<xs:element name="DocumentGUID" type="msg:GUIDType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentNumberType">
+		<xs:annotation>
+			<xs:documentation>Тип за номер документ - стар</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocNumber" type="xs:string" />
+			<xs:element name="DocDate" type="xs:date" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="GUIDType">
+		<xs:annotation>
+			<xs:documentation>Тип за GUID</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CorrespondentKindType">
+		<xs:annotation>
+			<xs:documentation>Тип за вида на Кореспондента - Corr_Аpplicant  = заявител; Corr_Other - обикновен кореспондент</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Corr_Applicant" />
+			<xs:enumeration value="Corr_Other" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ErrorMessageType">
+		<xs:annotation>
+			<xs:documentation>Тип за съобщение - грешка възникнало в процеса на обработка на съобщение</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MessageGUID" type="msg:GUIDType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>GUID на съобщение, което  е предизвикало грешката</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorType" type="msg:ErrorKindType">
+				<xs:annotation>
+					<xs:documentation>Вид на грешката - Еxternal - предизвикана от неточности в съобщението, Internal - проблем в получаващата страна</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrorDescription" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Описание на грешката</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ErrorKindType">
+		<xs:annotation>
+			<xs:documentation>Тип за вид на грешката - Еxternal (грешка в формат съобщение); Internal (вътрешна грешка . няма връзка БД)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ERR_INTERNAL" />
+			<xs:enumeration value="ERR_EXTERNAL" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
