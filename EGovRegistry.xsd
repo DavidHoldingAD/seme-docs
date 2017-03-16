@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified"
-	targetNamespace="http://schemas.egov.bg/messaging/v1"
-	xmlns="http://schemas.egov.bg/messaging/v1"
-	xmlns:tns="uri:egovmsg"
+	targetNamespace="uri:egovmsg"
+	xmlns="uri:egovmsg"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<xsd:simpleType name="guid">
-		<xsd:annotation>
-			<xsd:documentation>Тип за уникален индентификатор</xsd:documentation>
-		</xsd:annotation>
-		<xsd:restriction base="xsd:string">
-			<xsd:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}" />
-		</xsd:restriction>
-	</xsd:simpleType>
+
 	<xsd:element name="EGovMessageDir">
+		<xsd:annotation>
+			<xsd:documentation>Списък от участници в обмена на електронни съобщения</xsd:documentation>
+		</xsd:annotation>
 		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation>Списък от участници</xsd:documentation>
+			</xsd:annotation>
 			<xsd:sequence>
 				<xsd:element name="Entity" maxOccurs="unbounded">
 					<xsd:annotation>
-						<xsd:documentation>Списък от организации, вписани в директорията</xsd:documentation>
+						<xsd:documentation>Участник</xsd:documentation>
 					</xsd:annotation>
 					<xsd:complexType mixed="true">
 						<xsd:sequence>
@@ -33,17 +31,17 @@
 							</xsd:element>
 							<xsd:element name="Guid" type="guid">
 								<xsd:annotation>
-									<xsd:documentation>уникален идентификатор на организация</xsd:documentation>
+									<xsd:documentation>GUID (глобален уникален идентификатор)</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="ParentGuid" type="guid">
 								<xsd:annotation>
-									<xsd:documentation>идентификатор на организация от горно ниво</xsd:documentation>
+									<xsd:documentation>GUID (глобален уникален идентификтор) на участника от горно ниво (в случай на клон)</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="AdministrativeBodyName">
 								<xsd:annotation>
-									<xsd:documentation>Наименование на административен орган</xsd:documentation>
+									<xsd:documentation>Наименование</xsd:documentation>
 								</xsd:annotation>
 								<xsd:simpleType>
 									<xsd:restriction base="xsd:string">
@@ -53,13 +51,13 @@
 							</xsd:element>
 							<xsd:element name="Contact">
 								<xsd:annotation>
-									<xsd:documentation>Контактно лице по технически въпроси</xsd:documentation>
+									<xsd:documentation>Технически контакт</xsd:documentation>
 								</xsd:annotation>
 								<xsd:complexType>
 									<xsd:all>
 										<xsd:element name="Phone">
 											<xsd:annotation>
-												<xsd:documentation>Стационарен телефон</xsd:documentation>
+												<xsd:documentation>Телефонен номер</xsd:documentation>
 											</xsd:annotation>
 											<xsd:simpleType>
 												<xsd:restriction base="xsd:string">
@@ -69,7 +67,7 @@
 										</xsd:element>
 										<xsd:element name="Fax">
 											<xsd:annotation>
-												<xsd:documentation>Факс</xsd:documentation>
+												<xsd:documentation>Факс номер</xsd:documentation>
 											</xsd:annotation>
 											<xsd:simpleType>
 												<xsd:restriction base="xsd:string">
@@ -79,7 +77,7 @@
 										</xsd:element>
 										<xsd:element name="EmailAddress">
 											<xsd:annotation>
-												<xsd:documentation>Адрес на електронна поща</xsd:documentation>
+												<xsd:documentation>Имейл адрес</xsd:documentation>
 											</xsd:annotation>
 											<xsd:simpleType>
 												<xsd:restriction base="xsd:string">
@@ -92,7 +90,7 @@
 							</xsd:element>
 							<xsd:element name="CertificateSN">
 								<xsd:annotation>
-									<xsd:documentation>Сериен номер на транспортния сертификат на организацията в hex</xsd:documentation>
+									<xsd:documentation>Сериен номер на транспортния сертификат на участника (в HEX формат)</xsd:documentation>
 								</xsd:annotation>
 								<xsd:simpleType>
 									<xsd:restriction base="xsd:string">
@@ -101,49 +99,67 @@
 								</xsd:simpleType>
 							</xsd:element>
 							<xsd:element name="Services">
+								<xsd:annotation>
+										<xsd:documentation>Списък от услуги, предоставяни от участника</xsd:documentation>
+								</xsd:annotation>
 								<xsd:complexType>
+									<xsd:annotation>
+										<xsd:documentation>Списък от услуги</xsd:documentation>
+									</xsd:annotation>
 									<xsd:sequence>
 										<xsd:element name="Service" maxOccurs="unbounded">
 											<xsd:annotation>
-												<xsd:documentation>Списък от услуги, предоставяни от организацията</xsd:documentation>
+												<xsd:documentation>Услуга</xsd:documentation>
 											</xsd:annotation>
 											<xsd:complexType>
 												<xsd:sequence>
 													<xsd:element name="Guid" type="guid">
 														<xsd:annotation>
-															<xsd:documentation>Уникален идентификатор на вид на услугата</xsd:documentation>
+															<xsd:documentation>GUID (глобален уникален идентификатор)</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 													<xsd:element name="Name" type="xsd:string">
 														<xsd:annotation>
-															<xsd:documentation>Име на услугата</xsd:documentation>
+															<xsd:documentation>Наименование</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 													<xsd:element name="URI" type="xsd:anyURI">
 														<xsd:annotation>
-															<xsd:documentation>идентификатор за достъп до услугата</xsd:documentation>
+															<xsd:documentation>Идентификатор за достъп</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 													<xsd:element name="Status">
 														<xsd:annotation>
-															<xsd:documentation>активна, неактивна услуга</xsd:documentation>
+															<xsd:documentation>Статус</xsd:documentation>
 														</xsd:annotation>
 														<xsd:simpleType>
 															<xsd:restriction base="xsd:string">
-																<xsd:enumeration value="Active" />
-																<xsd:enumeration value="TemporarilyInactive" />
-																<xsd:enumeration value="PermanentlyInactive" />
+																<xsd:enumeration value="Active">
+																	<xsd:annotation>
+																		<xsd:documentation>Активен</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:enumeration>
+																<xsd:enumeration value="TemporarilyInactive">
+																	<xsd:annotation>
+																		<xsd:documentation>Временно неактивен</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:enumeration>
+																<xsd:enumeration value="PermanentlyInactive">
+																	<xsd:annotation>
+																		<xsd:documentation>Неактивен</xsd:documentation>
+																	</xsd:annotation>
+																</xsd:enumeration>
 															</xsd:restriction>
 														</xsd:simpleType>
 													</xsd:element>
 													<xsd:element name="Type" type="xsd:string">
 														<xsd:annotation>
-															<xsd:documentation>тип на услугата (service, email, esoed)</xsd:documentation>
+															<xsd:documentation>Тип (напр. "service", "email" и др.)</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 													<xsd:element name="Version" type="xsd:integer">
 														<xsd:annotation>
-															<xsd:documentation>Версия на услугата</xsd:documentation>
+															<xsd:documentation>Версия</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 												</xsd:sequence>
@@ -154,17 +170,25 @@
 							</xsd:element>
 							<xsd:element name="LastChange" type="xsd:dateTime">
 								<xsd:annotation>
-									<xsd:documentation>Дата на последна промяна за тази организация</xsd:documentation>
+									<xsd:documentation>Дата на последна промяна</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="Status">
 								<xsd:annotation>
-									<xsd:documentation>активен, неактивен запис</xsd:documentation>
+									<xsd:documentation>Статус</xsd:documentation>
 								</xsd:annotation>
 								<xsd:simpleType>
 									<xsd:restriction base="xsd:string">
-										<xsd:enumeration value="Active" />
-										<xsd:enumeration value="Inactive" />
+										<xsd:enumeration value="Active">
+											<xsd:annotation>
+												<xsd:documentation>Активен</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
+										<xsd:enumeration value="Inactive">
+											<xsd:annotation>
+												<xsd:documentation>Неактивен</xsd:documentation>
+											</xsd:annotation>
+										</xsd:enumeration>
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
@@ -173,10 +197,18 @@
 				</xsd:element>
 				<xsd:element name="LastChange" type="xsd:dateTime">
 					<xsd:annotation>
-						<xsd:documentation>Дата на последна актуализация на данните</xsd:documentation>
+						<xsd:documentation>Дата на последна промяна</xsd:documentation>
 					</xsd:annotation>
 				</xsd:element>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
+	<xsd:simpleType name="guid">
+		<xsd:annotation>
+			<xsd:documentation>GUID (глобален уникален индентификатор)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}" />
+		</xsd:restriction>
+	</xsd:simpleType>
 </xsd:schema>
