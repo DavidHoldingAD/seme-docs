@@ -2,10 +2,11 @@
 <wsdl:definitions
 	targetNamespace="http://services.egov.bg/messaging/"
 	xmlns:tns="http://services.egov.bg/messaging/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl">
+
 	<wsdl:types>
 		<xsd:schema elementFormDefault="qualified"
 			targetNamespace="http://services.egov.bg/messaging/">

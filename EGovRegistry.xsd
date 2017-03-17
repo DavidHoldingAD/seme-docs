@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified"
 	targetNamespace="uri:egovmsg"
-	xmlns="uri:egovmsg"
+	xmlns:tns="uri:egovmsg"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
 	<xsd:element name="EGovMessageDir">
@@ -29,12 +29,12 @@
 									</xsd:restriction>
 								</xsd:simpleType>
 							</xsd:element>
-							<xsd:element name="Guid" type="guid">
+							<xsd:element name="Guid" type="tns:guid">
 								<xsd:annotation>
 									<xsd:documentation>GUID (глобален уникален идентификатор)</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
-							<xsd:element name="ParentGuid" type="guid">
+							<xsd:element name="ParentGuid" type="tns:guid">
 								<xsd:annotation>
 									<xsd:documentation>GUID (глобален уникален идентификтор) на участника от горно ниво (в случай на клон)</xsd:documentation>
 								</xsd:annotation>
@@ -113,7 +113,7 @@
 											</xsd:annotation>
 											<xsd:complexType>
 												<xsd:sequence>
-													<xsd:element name="Guid" type="guid">
+													<xsd:element name="Guid" type="tns:guid">
 														<xsd:annotation>
 															<xsd:documentation>GUID (глобален уникален идентификатор)</xsd:documentation>
 														</xsd:annotation>
@@ -159,7 +159,7 @@
 													</xsd:element>
 													<xsd:element name="Version" type="xsd:integer">
 														<xsd:annotation>
-															<xsd:documentation>Версия</xsd:documentation>
+															<xsd:documentation>Версия (понастоящем 1)</xsd:documentation>
 														</xsd:annotation>
 													</xsd:element>
 												</xsd:sequence>
@@ -203,7 +203,7 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:simpleType name="guid">
+	<xsd:simpleType name="tns:guid">
 		<xsd:annotation>
 			<xsd:documentation>GUID (глобален уникален индентификатор)</xsd:documentation>
 		</xsd:annotation>
