@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+	<meta charset="utf-8"/>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.6.4/showdown.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.4.1/github-markdown.min.css">
+</head>
+<body>
+	<div id="fileSelector" style="display: none">
+		<ul>
+			<li><a href="README.md" onclick="onFileClick(this)">Начало</a></li>
+			<li><a href="Техническа%20спецификация.md" onclick="onFileClick(this)">Техническа спецификация</a></li>
+		</ul>
+	</div>
+	<div id="fileUploader" style="display: none">
+		<label for="file">
+			Изберете файл:
+		</label>
+		<input id="file" type="file" oninput="onFileChange(this)" />
+		<hr>
+	</div>
+	<div id="content" class="markdown-body"></div>
+	<script>
+		var fileSelectorElements = document.getElementById("fileSelector").getElementsByTagName("a");
+		for (var i = 0; i < fileSelectorElements.length; i++) {
+			var fileSelectorElement = fileSelectorElements[i];
+			fileSelectorElement.addEventListener("click", onFileClick, true);
+		}
+		var fileUploaderElement = document.getElementById("fileUploader");
+		fileUploader.addEventListener("change", onFileChange, true);
+		var contentElement = document.getElementById("content");
+
+		function loadFile(file) {
+			var reader = new FileReader();
+			reader.onload = function() {
+				var text = reader.result;
+
+				var converter = new showdown.Converter();
+				converter.setFlavor("github");
+				var html = converter.makeHtml(text);
+				contentElement.innerHTML = html;
+			}
+
+			contentElement.innerHTML = "Loading...";
+
+			reader.readAsText(file);
+		}
+
+		function onFileClick(e) {
+			var url = e.target.href;
+
+			var file = new File(url);
+
+			loadFile(file);
+		}
+
+		function onFileChange(e) {
+			var files = e.target.files;
+
+			if (files.length <= 0) {
+				return;
+			}
+
+			var file = files[0];
+
+			loadFile(file);
+		}
+
+		switch (window.location.protocol) {
+			case "http:":
+			case "https:": {
+				fileSelectorElement.style.display = "block";
+				break;
+			}
+			case "file:": {
+				fileUploaderElement.style.display = "block";
+				break;
+			}
+			default: {
+				break;
+			}
+		}
+	</script>
+</body>
+</html>
