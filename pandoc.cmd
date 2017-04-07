@@ -3,9 +3,19 @@
 
 chcp 65001
 
-pandoc.exe -s "README.md" -o "README.docx"
-pandoc.exe -s "README.md" -o "README.html"
-pandoc.exe -s "Техническа спецификация.md" -o "Техническа спецификация.docx"
-pandoc.exe -s "Техническа спецификация.md" -o "Техническа спецификация.html"
-pandoc.exe -s "Издаване на транспортен сертификат.md" -o "Издаване на транспортен сертификат.docx"
-pandoc.exe -s "Издаване на транспортен сертификат.md" -o "Издаване на транспортен сертификат.html"
+setlocal
+setlocal EnableDelayedExpansion
+
+rem http://pandoc.org/installing.html
+
+set WORKING_DIR=%~dp0
+
+for %%X in (%WORKING_DIR%*.md) do (
+	echo Converting "!FILE_MD!" to DOCX...
+	set FILE_DOCX=%%~nX.docx
+	pandoc.exe -s "!FILE_MD!" -o "!FILE_DOCX!"
+
+	echo Converting "!FILE_MD!" to HTML...
+	set FILE_HTML=%%~nX.html
+	pandoc.exe -s "!FILE_MD!" -o "!FILE_HTML!"
+)
