@@ -2,5 +2,8 @@
 	"no-hard-tabs": false,
 	"line-length": {
 		"line_length": 140
+	},
+	"ol-prefix": {
+		 "style": "ordered"
 	}
 }
