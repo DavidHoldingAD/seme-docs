@@ -16,10 +16,10 @@ New-Item -Path $OutputDir -ItemType Directory
 $FilesMD = Get-ChildItem -Path $WorkingDir -Filter "*.md"
 foreach ($FileMD in $FilesMD) {
 	Write-Host -Object "Converting `"$FileMD`" to DOCX..."
-	$FileDOCX = Join-Path -Path $OutputDir -ChildPath "$($FileMD.Name).docx"
-	pandoc.exe -s "$FileMD" -o "$FileDOCX"
+	$FileDOCX = Join-Path -Path $OutputDir -ChildPath "$($FileMD.BaseName).docx"
+	pandoc.exe -s "$FileMD" -o "$FileDOCX" -t docx
 
 	Write-Host -Object "Converting `"$FileMD`" to HTML..."
-	$FileHTML = Join-Path -Path $OutputDir -ChildPath  "$($FileMD.Name).html"
-	pandoc.exe -s "$FileMD" -o "$FileHTML"
+	$FileHTML = Join-Path -Path $OutputDir -ChildPath  "$($FileMD.BaseName).html"
+	pandoc.exe -s "$FileMD" -o "$FileHTML" -t html
 }
