@@ -4,13 +4,22 @@
 param (
 )
 
-$FilesMD = Get-ChildItem -Path $PSScriptRoot -Filter "*.md"
+$WorkingDir = $PSScriptRoot
+$OutputDir = Join-Path -Path $WorkingDir -ChildPath ".output"
+
+if (Test-Path -Path $OutputDir) {
+	Remove-Item -Path $OutputDir -Recurse
+}
+
+New-Item -Path $OutputDir -ItemType Directory
+
+$FilesMD = Get-ChildItem -Path $WorkingDir -Filter "*.md"
 foreach ($FileMD in $FilesMD) {
-	$FileDOCX = "${$FileMD.Name}.docx"
 	Write-Host -Object "Converting `"$FileMD`" to DOCX..."
+	$FileDOCX = Join-Path -Path $OutputDir -ChildPath "$($FileMD.Name).docx"
 	pandoc.exe -s "$FileMD" -o "$FileDOCX"
 
-	$FileHTML = "${$FileMD.Name}.html"
 	Write-Host -Object "Converting `"$FileMD`" to HTML..."
-	pandoc.exe -s "$FileMD" -o "$FileDOCX"
+	$FileHTML = Join-Path -Path $OutputDir -ChildPath  "$($FileMD.Name).html"
+	pandoc.exe -s "$FileMD" -o "$FileHTML"
 }
