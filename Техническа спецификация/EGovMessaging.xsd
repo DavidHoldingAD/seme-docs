@@ -445,7 +445,7 @@
 		<xsd:sequence>
 			<xsd:element name="DocID" type="tns:DocumentIdentificationType">
 				<xsd:annotation>
-					<xsd:documentation>Идентификатор на документа (при получателя)</xsd:documentation>
+					<xsd:documentation>Идентификатор на документа (съдържа номер/УРИ на документа при получателя му)</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 			<xsd:element name="DocRegStatus" type="tns:DocumentStatusType">
@@ -519,7 +519,7 @@
 		<xsd:sequence>
 			<xsd:element name="DocID" type="tns:DocumentIdentificationType">
 				<xsd:annotation>
-					<xsd:documentation>Идентификатор на документа (при подателя)</xsd:documentation>
+					<xsd:documentation>Идентификатор на документа (съдържа номер/УРИ на документа при получателя му)</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
