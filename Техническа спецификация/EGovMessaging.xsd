@@ -65,14 +65,14 @@
 									<xsd:documentation>Заявление за регистриране на документ</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
-							<xsd:element name="DocumentStatusResponse" type="tns:DocumentStatusResponseType">
-								<xsd:annotation>
-									<xsd:documentation>Известие за състояние на документ</xsd:documentation>
-								</xsd:annotation>
-							</xsd:element>
 							<xsd:element name="DocumentStatusRequest" type="tns:DocumentStatusRequestType">
 								<xsd:annotation>
 									<xsd:documentation>Заявление за проверка на състоянието на документ</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+							<xsd:element name="DocumentStatusResponse" type="tns:DocumentStatusResponseType">
+								<xsd:annotation>
+									<xsd:documentation>Известие за състояние на документ</xsd:documentation>
 								</xsd:annotation>
 							</xsd:element>
 							<xsd:element name="Error" type="tns:ErrorMessageType">
