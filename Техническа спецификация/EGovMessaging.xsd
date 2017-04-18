@@ -6,10 +6,8 @@
 	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
 	xmlns:duri="http://ereg.egov.bg/segment/0009-000001">
 
-	<!--
 	<xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" />
 	<xsd:import namespace="http://ereg.egov.bg/segment/0009-000001" />
-	-->
 
 	<xsd:element name="Message">
 		<xsd:annotation>

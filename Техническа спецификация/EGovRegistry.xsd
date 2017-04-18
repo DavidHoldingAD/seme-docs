@@ -203,7 +203,7 @@
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
-	<xsd:simpleType name="tns:guid">
+	<xsd:simpleType name="guid">
 		<xsd:annotation>
 			<xsd:documentation>GUID (глобален уникален индентификатор)</xsd:documentation>
 		</xsd:annotation>
