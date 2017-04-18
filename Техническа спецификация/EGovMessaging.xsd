@@ -425,7 +425,7 @@
 			</xsd:element>
 			<xsd:element name="ServiceCode" type="xsd:string">
 				<xsd:annotation>
-					<xsd:documentation>код (идентификатор/УРИ)</xsd:documentation>
+					<xsd:documentation>Kод (идентификатор/УРИ)</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
 		</xsd:sequence>
