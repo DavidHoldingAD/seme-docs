@@ -13,10 +13,10 @@ mkdir -p "$OUTPUT_DIR"
 
 for FILE_MD in "$WORKING_DIR"/*.md; do
 	echo "Converting \"$FILE_MD\" to DOCX..."
-	FILE_DOCX=$OUTPUT_DIR/`basename "$FILE_MD" .md`
+	FILE_DOCX=$OUTPUT_DIR/${FILE_MD%.*}.docx
 	pandoc -f markdown_github -s "$FILE_MD" -o "$FILE_DOCX" -t docx
 
 	echo "Converting \"$FILE_MD\" to HTML..."
-	FILE_HTML=$OUTPUT_DIR/`basename "$FILE_MD" .html`
+	FILE_HTML=$OUTPUT_DIR/${FILE_MD%.*}.html
 	pandoc -f markdown_github -s "$FILE_MD" -o "$FILE_HTML" -t html
 done
