@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema elementFormDefault="qualified"
-	targetNamespace="uri:egovmsg"
-	xmlns:tns="uri:egovmsg"
+	targetNamespace="http://schemas.egov.bg/messaging/v1"
+	xmlns:tns="http://schemas.egov.bg/messaging/v1"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
 	<xsd:element name="EGovMessageDir">
