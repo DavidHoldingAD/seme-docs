@@ -168,9 +168,4 @@
 			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:binding>
-	<wsdl:service name="egovmsg">
-		<wsdl:port name="egovmsgPort" binding="tns:egovmsgBinding">
-			<soap:address location="https://egov-docflow.is-bg.net:443/service/" />
-		</wsdl:port>
-	</wsdl:service>
 </wsdl:definitions>
